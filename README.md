@@ -6,7 +6,7 @@ Fekete Zsolt A2BWHC
 Hagen Botond Benedek IPTKIH
 Horváth Olivér TBOUWT
 
-#Szabályzat:
+Szabályzat:
 
 Kellélkel:
 A mancala táblákon általában 2 vagy 4 sor lyuk van. Egyes mancala játékokat földbevájt gödrökkel vagy kőbe vésett mélyedésekkel játszanak inkább. A lyukakat illetve gödröket hívják házaknak is. Néha a tábla két végén nagyobb gödrök találhatók, melyeket a játékosok a foglyuk ejtett kövek tárolására használnak. Köveken kívül babszemeket vagy egyéb magvakat is használnak a játékhoz. A kövek kezdeti elhelyezése csakúgy, mint a tábla méretei játékonként változnak. Az endodoit például 2 x 6 méretű táblától a 2 x 10 méretű tábláig játsszák.
