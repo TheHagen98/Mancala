@@ -1,0 +1,27 @@
+plugins {
+    id 'java'
+    id 'application'
+}
+
+repositories {
+    mavenCentral()
+}
+
+/*jar {
+    archivesBaseName('gs-gradle')
+    //archiveVersion = '0.1.0'
+}*/
+
+dependencies {
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.8.2'
+
+    implementation 'com.google.guava:guava:31.0.1-jre'
+}
+
+application {
+    mainClass = 'mancala.Controller.HelloWorld'
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
