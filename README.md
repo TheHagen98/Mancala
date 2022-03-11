@@ -4,7 +4,7 @@ Projekt eszközök tárgy beadandó
 #### Résztvevők:
 - Fekete Zsolt ***A2BWHC***
 - Hagen Botond Benedek ***IPTKIH***
-- Horváth Olivér ***TBOUWT***
+- Horváth Olivér ***TBOUWT*** (Oli200110)
 
 ## Szabályzat:
 
