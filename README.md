@@ -24,5 +24,5 @@ A játékosok elfoghatnak magokat attól függően, hogy melyik lyukban végződ
 Egy másik gyakori elfogási szabály az, hogy akkor fogja el egy játékos valamely lyuk tartalmát, ha az abban lévő magok száma meghalad egy korlátot.<br>
 Egyes mancala játékokban lyukakat is el lehet fogni. Ekkor a játék végén a lyukat elfogott játékos kapja annak tartalmát.
 
-
+![Class Diagram](CD.png)
 
