@@ -3,11 +3,10 @@ package mancala.Model;
 import java.awt.*;
 
 public class Sprite {
-    int x;
-    int y;
-    int width;
-    int height;
-
+    private int x;
+    private int y;
+    private int width;
+    private int height;
 
     Image image;
 
