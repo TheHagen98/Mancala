@@ -20,10 +20,17 @@ public class GameController {
     }
 
     protected void newGame() {
+        seeds = new ArrayList<>(48);
 
     }
 
-    protected boolean checkMove() {
+    /**
+     * Checks if the player tries to access his own pit.
+     *
+     * @return True if possible, false if not allowed.
+     */
+    protected boolean checkMove(Player player) {
+        //return a klikkelt pit tulajdonosa == a player
         return false;
     }
 
@@ -36,6 +43,9 @@ public class GameController {
     }
 
     protected void endOfGame() {
-
+        if (isEndOfGame()) {
+            //TODO: kihírdetni a nyertest
+            System.out.printf("Játék vége, player 1/2 nyert!");
+        }
     }
 }
