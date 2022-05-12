@@ -1,12 +1,21 @@
 package mancala.Model;
 
+import java.awt.*;
 import java.util.ArrayList;
 
 public class Board extends Sprite {
+
+    private int width, height;
+
     ArrayList<Pit> pits = new ArrayList<>(12);
     ArrayList<Pit> stores = new ArrayList<>(2);
 
-    protected Board(ArrayList<Pit> pits, ArrayList<Pit> stores) {
+    public Board(ArrayList<Pit> pits, ArrayList<Pit> stores, int x, int y, int width, int height) {
+        this.pits=pits;
+        this.stores=stores;
+        this.x=x;
+        this.y=y;
+
 
     }
 
@@ -18,4 +27,13 @@ public class Board extends Sprite {
         return stores;
     }
 
+    @Override
+    public void draw(Graphics2D graphics2D) {
+        graphics2D.setColor(new Color(95,70,60));
+        graphics2D.fillRoundRect(x,y,width,height,50,30);
+
+        graphics2D.setColor(Color.black);
+        graphics2D.setStroke(new BasicStroke(10.0f));
+        graphics2D.drawRoundRect(x,y,width,height,50,30);
+    }
 }

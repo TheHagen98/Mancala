@@ -2,17 +2,12 @@ package mancala.Model;
 
 import java.awt.*;
 
-public class Sprite {
-    private int x;
-    private int y;
-    private int width;
-    private int height;
+abstract public class Sprite {
+    protected int x;
+    protected int y;
 
-    Image image;
 
-    void draw(Graphics2D graphics2D) {
-
-    }
+    abstract public void draw(Graphics2D graphics2D);
 
     public int getX() {
         return x;
@@ -22,15 +17,7 @@ public class Sprite {
         return y;
     }
 
-    public int getWidth() {
-        return width;
-    }
+    public void setX(int x) { this.x=x; }
 
-    public int getHeight() {
-        return height;
-    }
-
-    public Image getImage() {
-        return image;
-    }
+    public void setY(int y) { this.y = y; }
 }

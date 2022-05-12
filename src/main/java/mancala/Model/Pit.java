@@ -1,5 +1,6 @@
 package mancala.Model;
 
+import java.awt.*;
 import java.util.ArrayList;
 
 public class Pit extends Sprite {
@@ -27,5 +28,10 @@ public class Pit extends Sprite {
 
     protected int getSeedCount() {
         return seeds.size();
+    }
+
+    @Override
+    public void draw(Graphics2D graphics2D) {
+
     }
 }
