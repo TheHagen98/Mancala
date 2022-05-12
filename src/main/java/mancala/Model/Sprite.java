@@ -1,4 +1,4 @@
-package mancala;
+package mancala.Model;
 
 import java.awt.*;
 
