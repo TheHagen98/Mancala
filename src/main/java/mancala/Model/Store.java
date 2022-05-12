@@ -16,6 +16,19 @@ public class Store extends Pit{
 
     @Override
     public void draw(Graphics2D graphics2D) {
+        if (id==6) {
+            graphics2D.setColor(new Color(65, 95, 120));
+            graphics2D.fillRoundRect(x-width/2,y-height/2,width,height,50,30);
+        }
+        else if (id==13) {
+            graphics2D.setColor(new Color(100, 60, 60));
+            graphics2D.fillRoundRect(x-width/2,y-height/2,width,height,50,30);
+        }
+
+
+        graphics2D.setColor(Color.black);
+        graphics2D.setStroke(new BasicStroke(10.0f));
+        graphics2D.drawRoundRect(x-width/2,y-height/2,width,height,50,30);
 
     }
 }

@@ -6,8 +6,8 @@ import java.util.ArrayList;
 public class Pit extends Sprite {
     ArrayList<Seed> seeds;
     private  int radius;
-    private  int id;
-    private static int ID=0;
+    protected   int id;
+    protected static int ID=0;
     Pit(ArrayList<Seed> seeds, int radius) {
         this.seeds=seeds;
         this.radius=radius;
@@ -41,6 +41,22 @@ public class Pit extends Sprite {
 
     @Override
     public void draw(Graphics2D graphics2D) {
+        graphics2D.setColor(new Color(105, 80, 70));
+        graphics2D.fillOval(x-radius,y-radius,2*radius,2*radius);
+
+        graphics2D.setColor(Color.black);
+        graphics2D.setStroke(new BasicStroke(10.0f));
+        graphics2D.drawOval(x-radius,y-radius,2*radius,2*radius);
+    }
+
+    public void drawNumber(Graphics2D graphics2D) {
+        if (id!=6&&id!=13)
+        {
+            Font font = new Font("Arial", Font.PLAIN, 24);
+            graphics2D.setFont(font);
+            graphics2D.setColor(Color.black);
+            graphics2D.drawString(String.valueOf(getSeedCount()), x,y);
+        }
 
     }
 }
