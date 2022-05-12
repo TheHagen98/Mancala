@@ -5,18 +5,18 @@ import java.util.ArrayList;
 
 public class Pit extends Sprite {
     ArrayList<Seed> seeds;
-    private  int radius;
-    protected   int id;
-    protected static int ID=0;
+    private int radius;
+    protected int id;
+    protected static int ID = 0;
     Pit(ArrayList<Seed> seeds, int radius) {
-        this.seeds=seeds;
-        this.radius=radius;
-        this.id=Pit.ID++;
+        this.seeds = seeds;
+        this.radius = radius;
+        this.id = Pit.ID++;
     }
 
     Pit(ArrayList<Seed> seeds) {
-        this.seeds=seeds;
-        this.id=Pit.ID++;
+        this.seeds = seeds;
+        this.id = Pit.ID++;
     }
 
     public ArrayList<Seed> getSeeds() {
@@ -35,8 +35,16 @@ public class Pit extends Sprite {
         seeds.remove(seedIndex);
     }
 
+    public void removeSeeds() {
+        seeds.removeAll(seeds);
+    }
+
     public int getSeedCount() {
         return seeds.size();
+    }
+
+    public int getId() {
+        return id;
     }
 
     @Override

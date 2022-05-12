@@ -26,6 +26,7 @@ public class GameController {
 
     /**
      * Checks if the player tries to access his own pit.
+     *
      * @param player The player we want to check.
      * @return True if possible, false if not allowed.
      */
@@ -34,11 +35,11 @@ public class GameController {
         return false;
     }
 
-    protected void move(Pit target) {
-        for (int i = 0; i <target.getSeedCount(); i++) {
-            ArrayList<Seed> seeds = target.getSeeds();
-            pits.get(0).addSeed(seeds.get(i));   //FIXME: nem get(0), hanem mindig a targetIndex++ kell
-
+    protected void move(Pit start) {
+        for (int i = 0; i < start.getSeedCount(); i++) {
+            ArrayList<Seed> seeds = start.getSeeds();
+            pits.get(start.getId() + i).addSeed(seeds.get(i));   //FIXME: nem get(0), hanem mindig a targetIndex++ kell
+            start.removeSeeds();
         }
 
     }
@@ -47,7 +48,7 @@ public class GameController {
         while (!isEndOfGame()) {
             //player1 rákattint egy pitre, végigpottyantja a seedeket -> move()
             //TODO: checkCapture()
-            //TODO: checkLandInStore()
+            //TODO: checkLandInStore() --> ha true, akkor jöhet megint
             //player 2-re átkerül a lépés
             //player2 rákattint egy pitre, végigpottyantja a seedeket
             //player1-re átkerül a lépés
@@ -55,21 +56,39 @@ public class GameController {
 
     }
 
-    void checkCapture() {
+    void checkCapture(Pit start) {
 
     }
 
-    void checkLandInStore() {
+    /**
+     * Checks if the given pit will land in a store.
+     * @param start The selected pit
+     * @return True if it will land in a store, false if not.
+     */
+    void checkLandInStore(Pit start) {
+        int checkedID = (start.getId() + start.getSeedCount()) % 14;
 
+        if (checkedID == 6 || checkedID == 13) { //A két store ID-ja
+            landInStore(start);
+            //TODO: mégegy move vagy hogy
+        }
+        else return;
     }
 
-    void landInStore() {
+    /**
+     *
+     */
+    void landInStore(Pit start) {
         if (true) { //TODO: az utolsó seed a store-ba esik
+
             //mégegyszer jöhet
         }
     }
 
     void capture() {
+        //ha az utolsó kő pont saját üres pitbe esik
+        //-->
+        // megkapom a szemben lévő pitből az összes seedet
 
     }
 
