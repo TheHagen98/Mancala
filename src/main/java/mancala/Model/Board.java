@@ -30,10 +30,10 @@ public class Board extends Sprite {
     @Override
     public void draw(Graphics2D graphics2D) {
         graphics2D.setColor(new Color(95,70,60));
-        graphics2D.fillRoundRect(x,y,width,height,50,30);
+        graphics2D.fillRoundRect(x-width/2,y-height/2,width,height,50,30);
 
         graphics2D.setColor(Color.black);
         graphics2D.setStroke(new BasicStroke(10.0f));
-        graphics2D.drawRoundRect(x,y,width,height,50,30);
+        graphics2D.drawRoundRect(x-width/2,y-height/2,width,height,50,30);
     }
 }
