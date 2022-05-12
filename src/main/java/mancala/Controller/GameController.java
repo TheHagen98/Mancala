@@ -15,8 +15,8 @@ public class GameController {
     Player[] players = new Player[2];
     JPanel gamePanel; //kell ez?
 
-    protected GameController() {
-
+    public GameController() {
+        seeds = new ArrayList<>(48);
     }
 
     protected void newGame() {
@@ -26,23 +26,58 @@ public class GameController {
 
     /**
      * Checks if the player tries to access his own pit.
-     *
+     * @param player The player we want to check.
      * @return True if possible, false if not allowed.
      */
-    protected boolean checkMove(Player player) {
+    public boolean checkMove(Player player) {
         //return a klikkelt pit tulajdonosa == a player
         return false;
     }
 
-    protected void move(ArrayList<Seed> seed, Pit target) {
+    protected void move(Pit target) {
+        for (int i = 0; i <target.getSeedCount(); i++) {
+            ArrayList<Seed> seeds = target.getSeeds();
+            pits.get(0).addSeed(seeds.get(i));   //FIXME: nem get(0), hanem mindig a targetIndex++ kell
+
+        }
 
     }
 
-    protected boolean isEndOfGame() {
+    protected void gameLoop() {
+        while (!isEndOfGame()) {
+            //player1 rákattint egy pitre, végigpottyantja a seedeket -> move()
+            //TODO: checkCapture()
+            //TODO: checkLandInStore()
+            //player 2-re átkerül a lépés
+            //player2 rákattint egy pitre, végigpottyantja a seedeket
+            //player1-re átkerül a lépés
+        }
+
+    }
+
+    void checkCapture() {
+
+    }
+
+    void checkLandInStore() {
+
+    }
+
+    void landInStore() {
+        if (true) { //TODO: az utolsó seed a store-ba esik
+            //mégegyszer jöhet
+        }
+    }
+
+    void capture() {
+
+    }
+
+    public boolean isEndOfGame() {
         return false;
     }
 
-    protected void endOfGame() {
+    public void endOfGame() {
         if (isEndOfGame()) {
             //TODO: kihírdetni a nyertest
             System.out.printf("Játék vége, player 1/2 nyert!");

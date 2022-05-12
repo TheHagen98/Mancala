@@ -1,6 +1,7 @@
 plugins {
     id 'java'
     id 'application'
+    //id 'com.github.sherter.google-java-format' version '0.9'
 }
 
 repositories {
@@ -15,7 +16,8 @@ repositories {
 dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter:5.8.2'
 
-    implementation 'com.google.guava:guava:31.0.1-jre'
+    implementation 'com.google.guava:guava:31.1-jre'
+    //implementation 'com.google.googlejavaformat:google-java-format:1.15.0'
 }
 
 application {

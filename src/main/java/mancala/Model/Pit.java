@@ -19,19 +19,19 @@ public class Pit extends Sprite {
         return seeds;
     }
 
-    protected void addSeed(Seed seed) {
+    public void addSeed(Seed seed) {
         seeds.add(seed);
     }
 
-    protected void removeSeed(Seed seed) {
+    public void removeSeed(Seed seed) {
         seeds.remove(seed);
     }
 
-    protected void removeSeed(int seedIndex) {
+    public void removeSeed(int seedIndex) {
         seeds.remove(seedIndex);
     }
 
-    protected int getSeedCount() {
+    public int getSeedCount() {
         return seeds.size();
     }
 
