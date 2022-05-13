@@ -6,6 +6,8 @@ import mancala.View.GameWindow;
 import javax.swing.*;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.stream.IntStream;
 
 import static java.lang.Math.abs;
 import static java.lang.Math.round;
@@ -97,6 +99,10 @@ public class GameController {
         } else if (start.getSeedCount() == 0) {
             System.out.println("Can't move seeds from an empty pit!");
             return false;
+        } else if (currentPlayer == players[0] && IntStream.of(PLAYER1PITS).noneMatch(x -> x == start.getId())) {
+            System.out.println("Can't move other player's seeds!");
+        } else if (currentPlayer == players[1] && IntStream.of(PLAYER2PITS).noneMatch(x -> x == start.getId())) {
+            System.out.println("Can't move other player's seeds!");
         } else {
             move(start);
         }
@@ -116,7 +122,7 @@ public class GameController {
         for (int i = 0; i < start.getSeedCount(); i++) {
 
             if ((start.getId() + i) % 14 == avoidStoreID) shift++;
-            pits.get((start.getId()+1 + i + shift) % 14).addSeed(pitSeeds.get(i));
+            pits.get((start.getId() + 1 + i + shift) % 14).addSeed(pitSeeds.get(i));
         }
         start.removeSeeds();
 
