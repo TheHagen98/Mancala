@@ -7,7 +7,7 @@ public class Seed{
     UUID id;
 
 
-    Seed(/*int radius*/) {
+    public Seed(/*int radius*/) {
         UUID id = UUID.randomUUID();
     }
 

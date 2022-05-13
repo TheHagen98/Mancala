@@ -55,6 +55,12 @@ public class GameController {
             }
         }
 
+        //Create seeds
+        for (int i = 0; i < 48; i++) {
+            Seed seed = new Seed();
+            seeds.add(seed);
+        }
+
         board = new Board(pits, GameWindow.width / 2, GameWindow.height / 2, round(GameWindow.width / 1.2f), round(GameWindow.height / 1.8f));
         gamePanel.repaint();
     }
