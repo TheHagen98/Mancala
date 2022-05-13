@@ -18,6 +18,8 @@ public class Pit extends Sprite {
 
     Pit(ArrayList<Seed> seeds,  int x, int y) {
         this.seeds = seeds;
+        this.x=x;
+        this.y=y;
         this.id = Pit.ID++;
     }
 
@@ -55,7 +57,7 @@ public class Pit extends Sprite {
         graphics2D.fillOval(x-radius,y-radius,2*radius,2*radius);
 
         graphics2D.setColor(Color.black);
-        graphics2D.setStroke(new BasicStroke(10.0f));
+        graphics2D.setStroke(new BasicStroke(5.0f));
         graphics2D.drawOval(x-radius,y-radius,2*radius,2*radius);
     }
 

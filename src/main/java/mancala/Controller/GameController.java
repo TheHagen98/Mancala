@@ -28,15 +28,15 @@ public class GameController {
         //Create pits
         for (int i=0; i<14;i++) {
             if (i!=6 && i!=13) {
-                Pit pit=new Pit(null,i*10,40,10);
+                Pit pit=new Pit(null,GameWindow.width/2,GameWindow.height/2,round(GameWindow.height/8f));
                 pits.add(pit);
             }
             else if (i==6) {
-                Store pit=new Store(null,10,80,20,160);
+                Store pit=new Store(null,round(GameWindow.width/6.15f),GameWindow.height/2,round(GameWindow.width/7f),round(GameWindow.height/1.9f));
                 pits.add(pit);
             }
-            else if (i==13){
-                Store pit=new Store(null,800,80,20,160);
+            else {
+                Store pit=new Store(null,GameWindow.width-round(GameWindow.width/6.15f),GameWindow.height/2,round(GameWindow.width/7f),round(GameWindow.height/1.9f));
                 pits.add(pit);
             }
         }
