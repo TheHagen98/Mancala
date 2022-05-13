@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import static java.lang.Math.round;
 
 public class GameController {
+    public static final int STORE_1 = 6;
+    public static final int STORE_2 = 13;
 
     ArrayList<Seed> seeds;
     ArrayList<Pit> pits;
@@ -17,31 +19,29 @@ public class GameController {
     JPanel gamePanel; //kell ez?
 
     public GameController(JPanel gamePanel) {
-        this.gamePanel=gamePanel;
+        this.gamePanel = gamePanel;
         newGame();
     }
 
     private void newGame() {
         seeds = new ArrayList<>(48); //
-        pits=new ArrayList<>(14);
+        pits = new ArrayList<>(14);
 
         //Create pits
-        for (int i=0; i<14;i++) {
-            if (i!=6 && i!=13) {
-                Pit pit=new Pit(null,GameWindow.width/2,GameWindow.height/2,round(GameWindow.height/8f));
+        for (int i = 0; i < 14; i++) {
+            if (i != STORE_1 && i != STORE_2) {
+                Pit pit = new Pit(null, GameWindow.width / 2, GameWindow.height / 2, round(GameWindow.height / 8f));
                 pits.add(pit);
-            }
-            else if (i==6) {
-                Store pit=new Store(null,round(GameWindow.width/6.15f),GameWindow.height/2,round(GameWindow.width/7f),round(GameWindow.height/1.9f));
+            } else if (i == STORE_1) {
+                Store pit = new Store(null, round(GameWindow.width / 6.15f), GameWindow.height / 2, round(GameWindow.width / 7f), round(GameWindow.height / 1.9f));
                 pits.add(pit);
-            }
-            else {
-                Store pit=new Store(null,GameWindow.width-round(GameWindow.width/6.15f),GameWindow.height/2,round(GameWindow.width/7f),round(GameWindow.height/1.9f));
+            } else {
+                Store pit = new Store(null, GameWindow.width - round(GameWindow.width / 6.15f), GameWindow.height / 2, round(GameWindow.width / 7f), round(GameWindow.height / 1.9f));
                 pits.add(pit);
             }
         }
 
-        board =new Board(pits, GameWindow.width/2,GameWindow.height/2,round(GameWindow.width/1.2f),round(GameWindow.height/1.8f));
+        board = new Board(pits, GameWindow.width / 2, GameWindow.height / 2, round(GameWindow.width / 1.2f), round(GameWindow.height / 1.8f));
         gamePanel.repaint();
     }
 
@@ -57,10 +57,14 @@ public class GameController {
     }
 
     protected void move(Pit start) {
-        for (int i = 0; i < start.getSeedCount(); i++) {
-            ArrayList<Seed> seeds = start.getSeeds();
-            pits.get(start.getId() + i).addSeed(seeds.get(i));   //FIXME: nem get(0), hanem mindig a targetIndex++ kell
-            start.removeSeeds();
+        if (start.getId() == STORE_1 && start.getId() == STORE_2) { // a két store ID-ja
+            System.out.println("Can't move seeds from store!");
+        } else {
+            for (int i = 0; i < start.getSeedCount(); i++) {
+                ArrayList<Seed> seeds = start.getSeeds();
+                pits.get(start.getId() + i).addSeed(seeds.get(i));
+                start.removeSeeds();
+            }
         }
 
     }
@@ -83,28 +87,31 @@ public class GameController {
 
     /**
      * Checks if the given pit will land in a store.
+     *
      * @param start The selected pit
      * @return True if it will land in a store, false if not.
      */
     void checkLandInStore(Pit start) {
         int checkedID = (start.getId() + start.getSeedCount()) % 14;
 
-        if (checkedID == 6 || checkedID == 13) { //A két store ID-ja
-            landInStore(start);
+        if (checkedID == STORE_1 || checkedID == STORE_2) { //A két store ID-ja
+            //landInStore(start);
             //TODO: mégegy move vagy hogy
+            move(start);
+            System.out.println("Mégegyszer jöhetsz!");
         }
-        else return;
     }
 
     /**
      *
      */
-    void landInStore(Pit start) {
-        if (true) { //TODO: az utolsó seed a store-ba esik
+    /*void landInStore(Pit start) { //FIXME: vagy csak akkor hívódjon meg hogyha a checkLandInStore() az true és meghívja ezt?
+        // if (true) { //TODO: az utolsó seed a store-ba esik
 
-            //mégegyszer jöhet
-        }
-    }
+
+        //mégegyszer jöhet
+        // }
+    }*/
 
     void capture() {
         //ha az utolsó kő pont saját üres pitbe esik
@@ -120,7 +127,7 @@ public class GameController {
     public void endOfGame() {
         if (isEndOfGame()) {
             //TODO: kihírdetni a nyertest
-            System.out.printf("Játék vége, player 1/2 nyert!");
+            System.out.println("Játék vége, player 1/2 nyert!");
         }
     }
 
