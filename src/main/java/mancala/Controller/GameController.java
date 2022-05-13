@@ -36,10 +36,7 @@ public class GameController {
         pits = new ArrayList<>(14);
 
 
-
-
-        //Create pits
-
+        //Create pits & Stores
         for (int i = 0; i < 14; i++) {
             if (i != STORE_1 && i != STORE_2) {//FIXME Ronda
                 Pit pit;
@@ -62,16 +59,20 @@ public class GameController {
             }
         }
 
+        //Create seeds
         for (int i = 0; i < 48; i++) {
             Seed seed = new Seed();
             seeds.add(seed);
         }
 
         int seedIndex = 0;
-        ArrayList<Seed> tmp = new ArrayList<>();
-        for (int j = 0; j < 4; j++) {
-            tmp.add(seeds.get(seedIndex));
-            seedIndex++;
+        for (Pit pit : pits) {
+            if (pit.getId() != STORE_1 && pit.getId() != STORE_2) {
+                for (int j = 0; j < 4; j++) {
+                    pit.addSeed(seeds.get(seedIndex));
+                    seedIndex++;
+                }
+            }
         }
 
 
