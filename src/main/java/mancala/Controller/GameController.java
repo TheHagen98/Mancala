@@ -11,11 +11,15 @@ import static java.lang.Math.round;
 public class GameController {
     public static final int STORE_1 = 6;
     public static final int STORE_2 = 13;
+    public static final int[] PLAYER1PITS = {0, 1, 2, 3, 4, 5, 6};
+    public static final int[] PLAYER2PITS = {7, 8, 9, 10, 11, 12, 13, 13};
 
     ArrayList<Seed> seeds;
     ArrayList<Pit> pits;
     Board board;
     Player[] players = new Player[2];
+    Player currentPlayer;
+    Pit clickedPit;
     JPanel gamePanel; //kell ez?
 
     public GameController(JPanel gamePanel) {
@@ -46,37 +50,46 @@ public class GameController {
     }
 
     /**
-     * Checks if the player tries to access his own pit.
+     * Checks if the desired move can be made.
      *
-     * @param player The player we want to check.
+     * @param player The player who makes the move.
+     * @param start  The pit we want to check.
      * @return True if possible, false if not allowed.
      */
-    public boolean checkMove(Player player) {
-        //return a klikkelt pit tulajdonosa == a player
-        return false;
+    public boolean checkMove(Player player, Pit start) {
+        //ha a klikkelt pit tulajdonosa == a player
+        if (start.getId() == STORE_1 && start.getId() == STORE_2) { // a két store ID-ja
+            System.out.println("Can't move seeds from store!");
+            return false;
+        } else if (start.getSeedCount() == 0) {
+            System.out.println("Can't move seeds from an empty pit!");
+            return false;
+        } else {
+            move(start);
+        }
+
+        return true;
     }
 
     protected void move(Pit start) {
-        if (start.getId() == STORE_1 && start.getId() == STORE_2) { // a két store ID-ja
-            System.out.println("Can't move seeds from store!");
-        } else {
-            for (int i = 0; i < start.getSeedCount(); i++) {
-                ArrayList<Seed> seeds = start.getSeeds();
-                pits.get(start.getId() + i).addSeed(seeds.get(i));
-                start.removeSeeds();
-            }
+        for (int i = 0; i < start.getSeedCount(); i++) {
+            ArrayList<Seed> seeds = start.getSeeds();
+            pits.get(start.getId() + i).addSeed(seeds.get(i));
+            start.removeSeeds();
         }
-
     }
 
     private void gameLoop() {
         while (!isEndOfGame()) {
-            //player1 rákattint egy pitre, végigpottyantja a seedeket -> move()
+            do {
+                //player1 rákattint egy pitre
+                // checkMove() végigpottyantja a seedeket -> move()
+                checkMove(currentPlayer, clickedPit);
+            } while (!checkMove(currentPlayer, clickedPit)); //TODO currentPlayer és clickedPit
+
             //TODO: checkCapture()
             //TODO: checkLandInStore() --> ha true, akkor jöhet megint
-            //player 2-re átkerül a lépés
-            //player2 rákattint egy pitre, végigpottyantja a seedeket
-            //player1-re átkerül a lépés
+            passRound(); //----
         }
 
     }
@@ -121,13 +134,45 @@ public class GameController {
     }
 
     public boolean isEndOfGame() {
-        return false;
+        boolean allEmpty = false;
+        Player winner = null;
+
+        for (int player1pit : PLAYER1PITS) {
+            if (pits.get(player1pit).getSeedCount() != 0) {
+                allEmpty = false;
+                winner = null;
+                break;
+            }
+            allEmpty = true;
+            winner = players[1];
+        }
+
+        for (int player2pit : PLAYER2PITS) {
+            if (pits.get(player2pit).getSeedCount() != 0) {
+                allEmpty = false;
+                winner = null;
+                break;
+            }
+            allEmpty = true;
+            winner = players[0];
+        }
+
+        return allEmpty;
     }
 
     public void endOfGame() {
         if (isEndOfGame()) {
+            //TODO: a maradék pitekben lévő seedek kiosztása a storeba
             //TODO: kihírdetni a nyertest
             System.out.println("Játék vége, player 1/2 nyert!");
+        }
+    }
+
+    public void passRound() {
+        if (currentPlayer == players[0]) {
+            currentPlayer = players[1];
+        } else {
+            currentPlayer = players[0];
         }
     }
 
