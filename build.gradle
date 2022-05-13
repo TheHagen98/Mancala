@@ -21,7 +21,7 @@ dependencies {
 }
 
 application {
-    mainClass = 'mancala.Controller.HelloWorld'
+    mainClass = 'mancala.Controller.MancalaMain'
 }
 
 tasks.named('test') {
