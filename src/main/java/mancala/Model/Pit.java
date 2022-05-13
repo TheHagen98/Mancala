@@ -58,11 +58,11 @@ public class Pit extends Sprite {
     @Override
     public void draw(Graphics2D graphics2D) {
         graphics2D.setColor(new Color(105, 80, 70));
-        graphics2D.fillOval(x-radius+GameWindow.width/144,y-radius+GameWindow.height/192,2*radius- GameWindow.width/72,2*radius+GameWindow.height/96);
+        graphics2D.fillOval(x-radius+GameWindow.width/144,y-radius-GameWindow.height/192,2*radius- GameWindow.width/72,2*radius+GameWindow.height/96);
 
         graphics2D.setColor(Color.black);
-        graphics2D.setStroke(new BasicStroke(5.0f));
-        graphics2D.drawOval(x-radius+GameWindow.width/144,y-radius+GameWindow.height/192,2*radius- GameWindow.width/72,2*radius+GameWindow.height/96);
+        graphics2D.setStroke(new BasicStroke(4.0f));
+        graphics2D.drawOval(x-radius+GameWindow.width/144,y-radius-GameWindow.height/192,2*radius- GameWindow.width/72,2*radius+GameWindow.height/96);
     }
 
     public void drawNumber(Graphics2D graphics2D) {
@@ -75,4 +75,5 @@ public class Pit extends Sprite {
         }
 
     }
+
 }

@@ -33,9 +33,14 @@ public class GamePanel extends JPanel implements MouseListener, MouseMotionListe
         gameController.getBoard().draw(graphics2D);
         for (Pit item: gameController.getPits()) {
             item.draw(graphics2D);
+            if (item.getId()!=GameController.STORE_1 && item.getId()!=GameController.STORE_2/*&& item.getSeedCount()>0*/ ){
+                Seed.draw(graphics2D,item.getX(),item.getY(),25);
+
+            }
+
         }
 
-        Seed.draw(graphics2D,GameWindow.width/2,GameWindow.height/2,5);
+
         //controller.getPlayer().drawPlayer(g2d);
         //drawGUI(g2d);
 
@@ -49,7 +54,7 @@ public class GamePanel extends JPanel implements MouseListener, MouseMotionListe
             graphics2D.setColor(new Color(255, 190, 0)); //TODO játékos vizsgálat
 
 
-            graphics2D.drawOval(target.getX()- target.getRadius()+GameWindow.width/144,target.getY()- target.getRadius()+GameWindow.height/192,2* target.getRadius()- GameWindow.width/72,2* target.getRadius()+GameWindow.height/96);
+            graphics2D.drawOval(target.getX()- target.getRadius()+GameWindow.width/144,target.getY()- target.getRadius()-GameWindow.height/192,2* target.getRadius()- GameWindow.width/72,2* target.getRadius()+GameWindow.height/96);
         }
 
         Font font = new Font("Arial", Font.PLAIN, 24);
