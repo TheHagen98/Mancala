@@ -68,6 +68,7 @@ public class GameController {
      */
     public boolean checkMove(Player player, Pit start) {
         //ha a klikkelt pit tulajdonosa == a player
+
         if (start.getId() == STORE_1 && start.getId() == STORE_2) { // a két store ID-ja
             System.out.println("Can't move seeds from store!");
             return false;
@@ -82,13 +83,34 @@ public class GameController {
     }
 
     protected void move(Pit start) {
+        int shift = 0;
+        int avoidStoreID;
+        if (currentPlayer == players[0]) {
+            avoidStoreID = STORE_2;
+        } else /*if (currentPlayer == players[1])*/ {
+            avoidStoreID = STORE_1;
+        }
         for (int i = 0; i < start.getSeedCount(); i++) {
-            ArrayList<Seed> seeds = start.getSeeds();
-            pits.get(start.getId() + i).addSeed(seeds.get(i));
+            ArrayList<Seed> pitSeeds = start.getSeeds();
+            if ((start.getId() + i) % 14 == avoidStoreID) shift++;
+            pits.get(start.getId() + i + shift % 14).addSeed(pitSeeds.get(i));
             start.removeSeeds();
         }
         setClickedPit(null);
     }
+
+    /*protected void move(Pit start, boolean skipStore) {
+        if (skipStore) {
+            for (int i = 0; i < start.getSeedCount(); i++) {
+                ArrayList<Seed> pitSeeds = start.getSeeds();
+                if (i == start.getSeedCount())
+                    pits.get(start.getId() + i + 1 % 14).addSeed(pitSeeds.get(i));
+                else pits.get(start.getId() + i % 14).addSeed(pitSeeds.get(i));
+                start.removeSeeds();
+            }
+        } else System.out.println("Ide nem kellene eljutni...");
+        setClickedPit(null);
+    }*/
 
     private void gameLoop() {
         while (!isEndOfGame()) {
@@ -97,9 +119,9 @@ public class GameController {
                 // checkMove() végigpottyantja a seedeket -> move()
                 checkMove(currentPlayer, clickedPit);
             } while (!checkMove(currentPlayer, clickedPit)); //TODO currentPlayer és clickedPit
-
-            //TODO: checkCapture()
+            checkCapture(currentPlayer, clickedPit);
             //TODO: checkLandInStore() --> ha true, akkor jöhet megint
+            checkLandInStore(clickedPit);
             passRound(); //----
         }
 
@@ -116,7 +138,7 @@ public class GameController {
             relativeStore = STORE_2;
         }
 
-        Pit capturePit = pits.get(relativeStore + Math.abs(relativeStore - checkedID)% 14);
+        Pit capturePit = pits.get(relativeStore + Math.abs(relativeStore - checkedID) % 14);
         if (capturePit.getSeedCount() == 0) {
             capture(capturePit);
         }
@@ -125,6 +147,7 @@ public class GameController {
 
     void capture(Pit capturePit) {
         // megkapom a szemben lévő pitből az összes seedet
+        //TODO: felső attention message a capture-re!
         int currPlayerStoreID = 0;
         if (getCurrentPlayer() == players[0]) {
             currPlayerStoreID = STORE_1;
@@ -132,7 +155,7 @@ public class GameController {
             currPlayerStoreID = STORE_2;
         }
         for (int i = 0; i < capturePit.getSeedCount(); i++) {
-           pits.get(currPlayerStoreID).addSeed(capturePit.getSeeds().get(i));
+            pits.get(currPlayerStoreID).addSeed(capturePit.getSeeds().get(i));
         }
         capturePit.removeSeeds();
     }
@@ -148,9 +171,10 @@ public class GameController {
 
         if (checkedID == STORE_1 || checkedID == STORE_2) { //A két store ID-ja
             //landInStore(start);
-            //TODO: mégegy move vagy hogy
-            move(start);
             System.out.println("Mégegyszer jöhetsz!");
+            message = "Mégegyszer te jössz!";
+            //TODO: bewaitelni a kattintást valahogy
+            move(start);
         }
     }
 
@@ -164,8 +188,6 @@ public class GameController {
         //mégegyszer jöhet
         // }
     }*/
-
-
     public boolean isEndOfGame() {
         boolean allEmpty = false;
         Player winner = null;
@@ -198,6 +220,7 @@ public class GameController {
             //TODO: a maradék pitekben lévő seedek kiosztása a storeba
             //TODO: kihírdetni a nyertest
             System.out.println("Játék vége, player 1/2 nyert!");
+            message = "Játék vége!";
         }
     }
 
