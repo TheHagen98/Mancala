@@ -61,6 +61,15 @@ public class GameController {
             seeds.add(seed);
         }
 
+        //Fill pits with seeds
+        int seedIndex = 0;
+        for (Pit pit : pits) {
+            for (int j = 0; j < 4; j++) {
+                pit.addSeed(seeds.get(seedIndex));
+                seedIndex++;
+            }
+        }
+
         board = new Board(pits, GameWindow.width / 2, GameWindow.height / 2, round(GameWindow.width / 1.2f), round(GameWindow.height / 1.8f));
         gamePanel.repaint();
     }
