@@ -6,6 +6,7 @@ import mancala.View.GameWindow;
 import javax.swing.*;
 import java.util.ArrayList;
 
+import static java.lang.Math.abs;
 import static java.lang.Math.round;
 
 public class GameController {
@@ -35,9 +36,16 @@ public class GameController {
 
         //Create pits
         for (int i = 0; i < 14; i++) {
-            if (i != STORE_1 && i != STORE_2) {
-                Pit pit = new Pit(null, GameWindow.width / 2, GameWindow.height / 2, round(GameWindow.height / 8f));
+            if (i != STORE_1 && i != STORE_2) {//FIXME Ronda
+                Pit pit;
+                if (i < 6) {    //FIXME konstansok átírása dinamikus ablakméretre pl 8 7
+                    pit = new Pit(null, (8 * i) * GameWindow.width / 96 + 7 * GameWindow.width / 24, GameWindow.height / 2 + round(GameWindow.height / 7f), round(GameWindow.height / 12f));
+                } else {
+                    pit = new Pit(null, (8 * abs(12 - i)) * GameWindow.width / 96 + 7 * GameWindow.width / 24, GameWindow.height / 2 - round(GameWindow.height / 7f), round(GameWindow.height / 12f));
+                }
                 pits.add(pit);
+
+
             } else if (i == STORE_1) {
                 Store pit = new Store(null, round(GameWindow.width / 6.15f), GameWindow.height / 2, round(GameWindow.width / 7f), round(GameWindow.height / 1.9f));
                 pits.add(pit);

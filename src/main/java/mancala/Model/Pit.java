@@ -1,5 +1,7 @@
 package mancala.Model;
 
+import mancala.View.GameWindow;
+
 import java.awt.*;
 import java.util.ArrayList;
 
@@ -56,11 +58,11 @@ public class Pit extends Sprite {
     @Override
     public void draw(Graphics2D graphics2D) {
         graphics2D.setColor(new Color(105, 80, 70));
-        graphics2D.fillOval(x-radius,y-radius,2*radius,2*radius);
+        graphics2D.fillOval(x-radius+GameWindow.width/144,y-radius+GameWindow.height/192,2*radius- GameWindow.width/72,2*radius+GameWindow.height/96);
 
         graphics2D.setColor(Color.black);
         graphics2D.setStroke(new BasicStroke(5.0f));
-        graphics2D.drawOval(x-radius,y-radius,2*radius,2*radius);
+        graphics2D.drawOval(x-radius+GameWindow.width/144,y-radius+GameWindow.height/192,2*radius- GameWindow.width/72,2*radius+GameWindow.height/96);
     }
 
     public void drawNumber(Graphics2D graphics2D) {

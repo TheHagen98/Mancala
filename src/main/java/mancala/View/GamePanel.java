@@ -47,7 +47,9 @@ public class GamePanel extends JPanel implements MouseListener, MouseMotionListe
         if (target!=null)
         {
             graphics2D.setColor(new Color(255, 190, 0)); //TODO játékos vizsgálat
-            graphics2D.drawOval(target.getX()- target.getRadius(),target.getY()- target.getRadius(),2* target.getRadius(),2* target.getRadius());
+
+
+            graphics2D.drawOval(target.getX()- target.getRadius()+GameWindow.width/144,target.getY()- target.getRadius()+GameWindow.height/192,2* target.getRadius()- GameWindow.width/72,2* target.getRadius()+GameWindow.height/96);
         }
 
         Font font = new Font("Arial", Font.PLAIN, 24);
@@ -68,6 +70,7 @@ public class GamePanel extends JPanel implements MouseListener, MouseMotionListe
     public void mouseClicked(MouseEvent e) {
         if (this.target!=null)
         {
+            System.out.println(target.getId());
             gameController.setClickedPit(target);
         }
     }
