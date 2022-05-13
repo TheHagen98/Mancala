@@ -1,4 +1,4 @@
 package mancala.View;
 
-public class MenuPanel {
+public class MenuPanel { //TODO Menü
 }

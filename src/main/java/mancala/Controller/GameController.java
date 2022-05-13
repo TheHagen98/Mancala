@@ -23,12 +23,16 @@ public class GameController {
     ArrayList<Seed> seeds;
     ArrayList<Pit> pits;
     Board board;
-    Player[] players = new Player[2];
+    Player[] players=new Player[2];
     Player currentPlayer;
     Pit clickedPit;
     JPanel gamePanel; //kell ez?
 
     public GameController(JPanel gamePanel) {
+        for (int i=0;i<2;i++)
+        {
+            players[i] = new Player();
+        }
         this.gamePanel = gamePanel;
         newGame();
     }
@@ -37,7 +41,7 @@ public class GameController {
         seeds = new ArrayList<>(48); //
         pits = new ArrayList<>(14);
 
-
+        currentPlayer=players[0];
         //Create pits & Stores
         for (int i = 0; i < 14; i++) {
             if (i != STORE_1 && i != STORE_2) {//FIXME Ronda
@@ -52,7 +56,7 @@ public class GameController {
                 pits.add(pit);
 
 
-            } else if (i == STORE_1) {
+            } else if (i == STORE_2) {
                 Store pit = new Store(new ArrayList<Seed>(48), round(GameWindow.width / 6.15f), GameWindow.height / 2, round(GameWindow.width / 7f), round(GameWindow.height / 1.9f));
                 pits.add(pit);
             } else {
@@ -99,10 +103,15 @@ public class GameController {
         } else if (start.getSeedCount() == 0) {
             System.out.println("Can't move seeds from an empty pit!");
             return false;
-        } else if (currentPlayer == players[0] && IntStream.of(PLAYER1PITS).noneMatch(x -> x == start.getId())) {
+        } else if (currentPlayer == players[0] && start.getId()>6) {
+            System.out.println(start.getId());
+            System.out.println(String.valueOf(currentPlayer == players[0]));
             System.out.println("Can't move other player's seeds!");
-        } else if (currentPlayer == players[1] && IntStream.of(PLAYER2PITS).noneMatch(x -> x == start.getId())) {
+            return  false;
+        } else if (currentPlayer == players[1] && start.getId()<=6) {
+            System.out.println(String.valueOf(currentPlayer == players[0]));
             System.out.println("Can't move other player's seeds!");
+            return  false;
         } else {
             move(start);
         }
@@ -122,11 +131,12 @@ public class GameController {
         for (int i = 0; i < start.getSeedCount(); i++) {
 
             if ((start.getId() + i) % 14 == avoidStoreID) shift++;
-            pits.get((start.getId() + 1 + i + shift) % 14).addSeed(pitSeeds.get(i));
+            pits.get(((start.getId()  + i + shift) % 14)).addSeed(pitSeeds.get(i));
         }
+        checkCapture(currentPlayer, clickedPit);
+        checkLandInStore(clickedPit);
         start.removeSeeds();
 
-        setClickedPit(null);
     }
 
     /*protected void move(Pit start, boolean skipStore) {
@@ -147,20 +157,25 @@ public class GameController {
 
             //player1 rákattint egy pitre
             // checkMove() végigpottyantja a seedeket -> move()
-            checkMove(currentPlayer, clickedPit);
-            if (checkMove(currentPlayer, clickedPit)) { //TODO currentPlayer és clickedPit
-                checkCapture(currentPlayer, clickedPit);
-                //TODO: checkLandInStore() --> ha true, akkor jöhet megint
-                checkLandInStore(clickedPit);
-                passRound(); //----
+            //checkMove(currentPlayer, clickedPit);
+            if(clickedPit!=null){
+                if (checkMove(currentPlayer, clickedPit)) { //TODO currentPlayer és clickedPit
+
+                    //TODO: checkLandInStore() --> ha true, akkor jöhet megint
+
+                    setClickedPit(null);
+                    passRound(); //----
+
+                }
             }
+
             gamePanel.repaint();
         }
 
     }
 
     void checkCapture(Player player, Pit start) {
-        int checkedID = (start.getId() + start.getSeedCount()) % 14;
+        int checkedID = (start.getId() + start.getSeedCount())% 14 ;
         int relativeStore = 0;
 
         // Ha az érkezés pitje a jobb okldali store-tól ugyanakkora távolságra lévő pit üres, akkor capture()
@@ -199,14 +214,18 @@ public class GameController {
      * @return True if it will land in a store, false if not.
      */
     void checkLandInStore(Pit start) {
-        int checkedID = (start.getId() + start.getSeedCount()) % 14;
+        int checkedID = ((start.getId() + start.getSeedCount())-1) % 14;
 
+        System.out.println(checkedID);
         if (checkedID == STORE_1 || checkedID == STORE_2) { //A két store ID-ja
             //landInStore(start);
             System.out.println("Mégegyszer jöhetsz!");
-            message = "Mégegyszer te jössz!";
+            message = "Megegyszer te jossz!";
             //TODO: bewaitelni a kattintást valahogy
-            move(start);
+            passRound();
+            //move(start);
+        }else{
+            message="";
         }
     }
 
@@ -286,5 +305,8 @@ public class GameController {
 
     public String getMessage() {
         return message;
+    }
+    public boolean getPlayer(){
+        return currentPlayer==players[0];
     }
 }

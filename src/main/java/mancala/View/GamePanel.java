@@ -45,9 +45,6 @@ public class GamePanel extends JPanel implements MouseListener, MouseMotionListe
         }
 
 
-        //controller.getPlayer().drawPlayer(g2d);
-        //drawGUI(g2d);
-
         drawGUI(graphics2D);
     }
 
@@ -65,6 +62,7 @@ public class GamePanel extends JPanel implements MouseListener, MouseMotionListe
         graphics2D.setFont(font);
         graphics2D.setColor(Color.BLACK);
         drawCenteredString(gameController.getMessage(), GameWindow.width,GameWindow.height/5,graphics2D);
+        graphics2D.drawString("Jelenlegi jatekos: " + (gameController.getPlayer()?0:1),GameWindow.width/2-100,GameWindow.height-60);
 
     }
 
