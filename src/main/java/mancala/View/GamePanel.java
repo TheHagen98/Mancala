@@ -21,6 +21,7 @@ public class GamePanel extends JPanel implements MouseListener, MouseMotionListe
 
     public GamePanel(){
         setFocusable(true);
+        addMouseListener(this);
         addMouseMotionListener(this);
         this.setBackground (new Color(232,211,185));
     }
@@ -42,6 +43,13 @@ public class GamePanel extends JPanel implements MouseListener, MouseMotionListe
     }
 
     public void drawGUI (Graphics2D graphics2D){
+
+        if (target!=null)
+        {
+            graphics2D.setColor(new Color(255, 190, 0)); //TODO játékos vizsgálat
+            graphics2D.drawOval(target.getX()- target.getRadius(),target.getY()- target.getRadius(),2* target.getRadius(),2* target.getRadius());
+        }
+
         Font font = new Font("Arial", Font.PLAIN, 24);
         graphics2D.setFont(font);
         graphics2D.setColor(Color.white);
@@ -51,7 +59,10 @@ public class GamePanel extends JPanel implements MouseListener, MouseMotionListe
 
     @Override
     public void mouseClicked(MouseEvent e) {
-
+        if (this.target!=null)
+        {
+            //gameController.checkMove(gameController.)
+        }
     }
 
     @Override
@@ -95,7 +106,7 @@ public class GamePanel extends JPanel implements MouseListener, MouseMotionListe
                 }
             }
         }
-        if (targeted=false){
+        if (!targeted){
             this.target=null;
         }
         repaint();

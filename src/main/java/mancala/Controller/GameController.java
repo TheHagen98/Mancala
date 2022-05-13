@@ -188,4 +188,8 @@ public class GameController {
         return board;
     }
 
+    public Player getCurrentPlayer() {
+        return  currentPlayer;
+    }
+
 }
