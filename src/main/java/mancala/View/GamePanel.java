@@ -33,7 +33,7 @@ public class GamePanel extends JPanel implements MouseListener, MouseMotionListe
         gameController.getBoard().draw(graphics2D);
         for (Pit item: gameController.getPits()) {
             item.draw(graphics2D);
-            if (item.getId()!=GameController.STORE_1 && item.getId()!=GameController.STORE_2/*&& item.getSeedCount()>0*/ ){
+            if (item.getId()!=GameController.STORE_1 && item.getId()!=GameController.STORE_2 && item.getSeedCount()>0 ){
                 Seed.draw(graphics2D,item.getX(),item.getY(),25);
 
             }

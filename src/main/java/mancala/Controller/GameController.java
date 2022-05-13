@@ -4,6 +4,7 @@ import mancala.Model.*;
 import mancala.View.GameWindow;
 
 import javax.swing.*;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import static java.lang.Math.abs;
@@ -34,41 +35,45 @@ public class GameController {
         seeds = new ArrayList<>(48); //
         pits = new ArrayList<>(14);
 
+
+
+
         //Create pits
+
         for (int i = 0; i < 14; i++) {
             if (i != STORE_1 && i != STORE_2) {//FIXME Ronda
                 Pit pit;
                 if (i < 6) {    //FIXME konstansok átírása dinamikus ablakméretre pl 8 7
-                    pit = new Pit(null, (8 * i) * GameWindow.width / 96 + 7 * GameWindow.width / 24, GameWindow.height / 2 + round(GameWindow.height / 7f), round(GameWindow.height / 12f));
+
+                    pit = new Pit(new ArrayList<Seed>(48), (8 * i) * GameWindow.width / 96 + 7 * GameWindow.width / 24, GameWindow.height / 2 + round(GameWindow.height / 7f), round(GameWindow.height / 12f));
                 } else {
-                    pit = new Pit(null, (8 * abs(12 - i)) * GameWindow.width / 96 + 7 * GameWindow.width / 24, GameWindow.height / 2 - round(GameWindow.height / 7f), round(GameWindow.height / 12f));
+
+                    pit = new Pit(new ArrayList<Seed>(48), (8 * abs(12 - i)) * GameWindow.width / 96 + 7 * GameWindow.width / 24, GameWindow.height / 2 - round(GameWindow.height / 7f), round(GameWindow.height / 12f));
                 }
                 pits.add(pit);
 
 
             } else if (i == STORE_1) {
-                Store pit = new Store(null, round(GameWindow.width / 6.15f), GameWindow.height / 2, round(GameWindow.width / 7f), round(GameWindow.height / 1.9f));
+                Store pit = new Store(new ArrayList<Seed>(48), round(GameWindow.width / 6.15f), GameWindow.height / 2, round(GameWindow.width / 7f), round(GameWindow.height / 1.9f));
                 pits.add(pit);
             } else {
-                Store pit = new Store(null, GameWindow.width - round(GameWindow.width / 6.15f), GameWindow.height / 2, round(GameWindow.width / 7f), round(GameWindow.height / 1.9f));
+                Store pit = new Store(new ArrayList<Seed>(48), GameWindow.width - round(GameWindow.width / 6.15f), GameWindow.height / 2, round(GameWindow.width / 7f), round(GameWindow.height / 1.9f));
                 pits.add(pit);
             }
         }
 
-        //Create seeds
         for (int i = 0; i < 48; i++) {
             Seed seed = new Seed();
             seeds.add(seed);
         }
 
-        //Fill pits with seeds
         int seedIndex = 0;
-        for (Pit pit : pits) {
-            for (int j = 0; j < 4; j++) {
-                pit.addSeed(seeds.get(seedIndex));
-                seedIndex++;
-            }
+        ArrayList<Seed> tmp = new ArrayList<>();
+        for (int j = 0; j < 4; j++) {
+            tmp.add(seeds.get(seedIndex));
+            seedIndex++;
         }
+
 
         board = new Board(pits, GameWindow.width / 2, GameWindow.height / 2, round(GameWindow.width / 1.2f), round(GameWindow.height / 1.8f));
         gamePanel.repaint();
