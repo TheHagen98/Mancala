@@ -14,7 +14,7 @@ public class GameController {
     public static final int[] PLAYER1PITS = {0, 1, 2, 3, 4, 5, 6};
     public static final int[] PLAYER2PITS = {7, 8, 9, 10, 11, 12, 13, 13};
 
-    private String message="";
+    private String message = "";
 
     ArrayList<Seed> seeds;
     ArrayList<Pit> pits;
@@ -79,6 +79,7 @@ public class GameController {
             pits.get(start.getId() + i).addSeed(seeds.get(i));
             start.removeSeeds();
         }
+        setClickedPit(null);
     }
 
     private void gameLoop() {
@@ -96,8 +97,36 @@ public class GameController {
 
     }
 
-    void checkCapture(Pit start) {
+    void checkCapture(Player player, Pit start) {
+        int checkedID = (start.getId() + start.getSeedCount()) % 14;
+        int relativeStore = 0;
 
+        // Ha az érkezés pitje a jobb okldali store-tól ugyanakkora távolságra lévő pit üres, akkor capture()
+        if (player == players[0]) {
+            relativeStore = STORE_1;
+        } else if (player == players[1]) {
+            relativeStore = STORE_2;
+        }
+
+        Pit capturePit = pits.get(relativeStore + Math.abs(relativeStore - checkedID)% 14);
+        if (capturePit.getSeedCount() == 0) {
+            capture(capturePit);
+        }
+
+    }
+
+    void capture(Pit capturePit) {
+        // megkapom a szemben lévő pitből az összes seedet
+        int currPlayerStoreID = 0;
+        if (getCurrentPlayer() == players[0]) {
+            currPlayerStoreID = STORE_1;
+        } else if (getCurrentPlayer() == players[1]) {
+            currPlayerStoreID = STORE_2;
+        }
+        for (int i = 0; i < capturePit.getSeedCount(); i++) {
+           pits.get(currPlayerStoreID).addSeed(capturePit.getSeeds().get(i));
+        }
+        capturePit.removeSeeds();
     }
 
     /**
@@ -128,12 +157,6 @@ public class GameController {
         // }
     }*/
 
-    void capture() {
-        //ha az utolsó kő pont saját üres pitbe esik
-        //-->
-        // megkapom a szemben lévő pitből az összes seedet
-
-    }
 
     public boolean isEndOfGame() {
         boolean allEmpty = false;
@@ -191,14 +214,14 @@ public class GameController {
     }
 
     public Player getCurrentPlayer() {
-        return  currentPlayer;
+        return currentPlayer;
     }
 
     public void setClickedPit(Pit clickedPit) {
         this.clickedPit = clickedPit;
     }
 
-    public  String getMessage() {
+    public String getMessage() {
         return message;
     }
 }
