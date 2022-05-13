@@ -52,16 +52,23 @@ public class GamePanel extends JPanel implements MouseListener, MouseMotionListe
 
         Font font = new Font("Arial", Font.PLAIN, 24);
         graphics2D.setFont(font);
-        graphics2D.setColor(Color.white);
-        graphics2D.drawString("GUI", 15,30);
+        graphics2D.setColor(Color.BLACK);
+        drawCenteredString(gameController.getMessage(), GameWindow.width,GameWindow.height/5,graphics2D);
 
+    }
+
+    private void drawCenteredString(String s, int w, int h, Graphics2D g) {
+        FontMetrics fm = g.getFontMetrics();
+        int x = (w - fm.stringWidth(s)) / 2;
+        int y = (fm.getAscent() + (h - (fm.getAscent() + fm.getDescent())) / 2);
+        g.drawString(s, x, y);
     }
 
     @Override
     public void mouseClicked(MouseEvent e) {
         if (this.target!=null)
         {
-            //gameController.checkMove(gameController.)
+            gameController.setClickedPit(target);
         }
     }
 
