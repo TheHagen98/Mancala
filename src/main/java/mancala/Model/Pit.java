@@ -51,6 +51,8 @@ public class Pit extends Sprite {
         return id;
     }
 
+    public int getRadius() { return  radius; }
+
     @Override
     public void draw(Graphics2D graphics2D) {
         graphics2D.setColor(new Color(105, 80, 70));
