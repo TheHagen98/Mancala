@@ -112,12 +112,14 @@ public class GameController {
         } else /*if (currentPlayer == players[1])*/ {
             avoidStoreID = STORE_1;
         }
+        ArrayList<Seed> pitSeeds = start.getSeeds();
         for (int i = 0; i < start.getSeedCount(); i++) {
-            ArrayList<Seed> pitSeeds = start.getSeeds();
+
             if ((start.getId() + i) % 14 == avoidStoreID) shift++;
-            pits.get(start.getId() + i + shift % 14).addSeed(pitSeeds.get(i));
-            start.removeSeeds();
+            pits.get((start.getId()+1 + i + shift) % 14).addSeed(pitSeeds.get(i));
         }
+        start.removeSeeds();
+
         setClickedPit(null);
     }
 
@@ -146,8 +148,9 @@ public class GameController {
                 checkLandInStore(clickedPit);
                 passRound(); //----
             }
-
+            gamePanel.repaint();
         }
+
     }
 
     void checkCapture(Player player, Pit start) {
@@ -161,7 +164,7 @@ public class GameController {
             relativeStore = STORE_2;
         }
 
-        Pit capturePit = pits.get(relativeStore + Math.abs(relativeStore - checkedID) % 14);
+        Pit capturePit = pits.get((relativeStore + Math.abs(relativeStore - checkedID)) % 14);
         if (capturePit.getSeedCount() == 0) {
             capture(capturePit);
         }
