@@ -9,8 +9,10 @@ public class Store extends Pit{
 
     ArrayList<Seed> seeds;
 
-    Store(ArrayList<Seed> seeds) {
-        super(seeds);
+    public Store(ArrayList<Seed> seeds,int x,int y, int width, int height) {
+        super(seeds,x,y);
+        this.width=width;
+        this.height=height;
 
     }
 
@@ -21,7 +23,7 @@ public class Store extends Pit{
             graphics2D.fillRoundRect(x-width/2,y-height/2,width,height,50,30);
         }
         else if (id==13) {
-            graphics2D.setColor(new Color(100, 60, 60));
+            graphics2D.setColor(new Color(105, 46, 46));
             graphics2D.fillRoundRect(x-width/2,y-height/2,width,height,50,30);
         }
 

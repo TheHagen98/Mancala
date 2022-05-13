@@ -8,13 +8,15 @@ public class Pit extends Sprite {
     private int radius;
     protected int id;
     protected static int ID = 0;
-    Pit(ArrayList<Seed> seeds, int radius) {
+    public Pit(ArrayList<Seed> seeds, int x, int y, int radius) {
         this.seeds = seeds;
+        this.x=x;
+        this.y=y;
         this.radius = radius;
         this.id = Pit.ID++;
     }
 
-    Pit(ArrayList<Seed> seeds) {
+    Pit(ArrayList<Seed> seeds,  int x, int y) {
         this.seeds = seeds;
         this.id = Pit.ID++;
     }

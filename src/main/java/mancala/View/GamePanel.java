@@ -1,16 +1,19 @@
 package mancala.View;
 
 import mancala.Controller.GameController;
+import mancala.Model.Pit;
+import mancala.Model.Seed;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class GamePanel extends JPanel {
 
-    private GameController gameController;
-    private Integer x,y;
+    private GameController gameController=new GameController(this);
 
-    public GamePanel(Integer x, Integer y){
+
+
+    public GamePanel(){
         setFocusable(true);
         this.setBackground (new Color(232,211,185));
     }
@@ -19,11 +22,16 @@ public class GamePanel extends JPanel {
     public void paintComponent(Graphics g){
         Graphics2D g2d = (Graphics2D) g.create();
         super.paintComponent(g);
-        //controller.getRoom().drawRoom(g2d);
+        gameController.getBoard().draw(g2d);
+        for (Pit item: gameController.getPits()) {
+            item.draw(g2d);
+        }
+
+        Seed.draw(g2d,GameWindow.width/2,GameWindow.height/2,5);
         //controller.getPlayer().drawPlayer(g2d);
+        //drawGUI(g2d);
+
         drawGUI(g2d);
-
-
     }
 
     public void drawGUI (Graphics2D g2d){

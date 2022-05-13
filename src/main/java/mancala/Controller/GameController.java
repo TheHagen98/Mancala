@@ -1,27 +1,48 @@
 package mancala.Controller;
 
-import mancala.Model.Board;
-import mancala.Model.Pit;
-import mancala.Model.Player;
-import mancala.Model.Seed;
+import mancala.Model.*;
+import mancala.View.GameWindow;
 
 import javax.swing.*;
 import java.util.ArrayList;
 
+import static java.lang.Math.round;
+
 public class GameController {
+
     ArrayList<Seed> seeds;
     ArrayList<Pit> pits;
     Board board;
     Player[] players = new Player[2];
     JPanel gamePanel; //kell ez?
 
-    public GameController() {
-        seeds = new ArrayList<>(48);
+    public GameController(JPanel gamePanel) {
+        this.gamePanel=gamePanel;
+        newGame();
     }
 
-    protected void newGame() {
-        seeds = new ArrayList<>(48);
+    private void newGame() {
+        seeds = new ArrayList<>(48); //
+        pits=new ArrayList<>(14);
 
+        //Create pits
+        for (int i=0; i<14;i++) {
+            if (i!=6 && i!=13) {
+                Pit pit=new Pit(null,i*10,40,10);
+                pits.add(pit);
+            }
+            else if (i==6) {
+                Store pit=new Store(null,10,80,20,160);
+                pits.add(pit);
+            }
+            else if (i==13){
+                Store pit=new Store(null,800,80,20,160);
+                pits.add(pit);
+            }
+        }
+
+        board =new Board(pits, GameWindow.width/2,GameWindow.height/2,round(GameWindow.width/1.2f),round(GameWindow.height/1.8f));
+        gamePanel.repaint();
     }
 
     /**
@@ -44,7 +65,7 @@ public class GameController {
 
     }
 
-    protected void gameLoop() {
+    private void gameLoop() {
         while (!isEndOfGame()) {
             //player1 rákattint egy pitre, végigpottyantja a seedeket -> move()
             //TODO: checkCapture()
@@ -102,4 +123,17 @@ public class GameController {
             System.out.printf("Játék vége, player 1/2 nyert!");
         }
     }
+
+    public ArrayList<Seed> getSeeds() {
+        return seeds;
+    }
+
+    public ArrayList<Pit> getPits() {
+        return pits;
+    }
+
+    public Board getBoard() {
+        return board;
+    }
+
 }

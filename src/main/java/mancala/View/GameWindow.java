@@ -7,17 +7,16 @@ public class GameWindow extends JFrame {
 
     private GamePanel gamePanel;
     private MenuPanel menuPanel;
-    private Integer x, y;
+    public static int width=1280;
+    public static int height=720;
 
     public GameWindow() {
         setTitle("Mancala");
-        x = 1280;
-        y = 720;
-        setSize(new Dimension(x, y));
+        setSize(new Dimension(width, height));
         setResizable(false);
         setLocationRelativeTo(null);
 
-        gamePanel = new GamePanel(x,y);
+        gamePanel = new GamePanel();
         setVisible(true);
 
         setDefaultCloseOperation(EXIT_ON_CLOSE);
