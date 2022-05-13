@@ -192,4 +192,7 @@ public class GameController {
         return  currentPlayer;
     }
 
+    public void setClickedPit(Pit clickedPit) {
+        this.clickedPit = clickedPit;
+    }
 }
