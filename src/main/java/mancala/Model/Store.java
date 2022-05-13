@@ -34,5 +34,10 @@ public class Store extends Pit{
         graphics2D.setStroke(new BasicStroke(5.0f));
         graphics2D.drawRoundRect(x-width/2,y-height/2,width,height,50,30);
 
+        Font font = new Font("Arial", Font.PLAIN, 24);
+        graphics2D.setFont(font);
+        graphics2D.setColor(Color.WHITE);
+        graphics2D.drawString(String.valueOf(getSeedCount()), x-5, y+5);
+
     }
 }

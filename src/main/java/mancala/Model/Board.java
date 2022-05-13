@@ -33,5 +33,7 @@ public class Board extends Sprite {
         graphics2D.setColor(Color.black);
         graphics2D.setStroke(new BasicStroke(8.0f));
         graphics2D.drawRoundRect(x-width/2,y-height/2,width,height,50,30);
+
+
     }
 }

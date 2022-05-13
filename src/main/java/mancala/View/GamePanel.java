@@ -35,6 +35,10 @@ public class GamePanel extends JPanel implements MouseListener, MouseMotionListe
             item.draw(graphics2D);
             if (item.getId()!=GameController.STORE_1 && item.getId()!=GameController.STORE_2 && item.getSeedCount()>0 ){
                 Seed.draw(graphics2D,item.getX(),item.getY(),25);
+                Font font = new Font("Arial", Font.PLAIN, 24);
+                graphics2D.setFont(font);
+                graphics2D.setColor(Color.BLACK);
+                graphics2D.drawString(String.valueOf(item.getSeedCount()), item.getX()-5, item.getY()+5);
 
             }
 
@@ -78,6 +82,8 @@ public class GamePanel extends JPanel implements MouseListener, MouseMotionListe
             System.out.println(target.getId());
             gameController.setClickedPit(target);
         }
+        gameController.gameLoop();
+        repaint();
     }
 
     @Override

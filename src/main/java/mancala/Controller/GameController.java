@@ -78,6 +78,7 @@ public class GameController {
 
         board = new Board(pits, GameWindow.width / 2, GameWindow.height / 2, round(GameWindow.width / 1.2f), round(GameWindow.height / 1.8f));
         gamePanel.repaint();
+        gameLoop();
     }
 
     /**
@@ -89,7 +90,7 @@ public class GameController {
      */
     public boolean checkMove(Player player, Pit start) {
         //ha a klikkelt pit tulajdonosa == a player
-
+        if (start == null) return false;
         if (start.getId() == STORE_1 && start.getId() == STORE_2) { // a két store ID-ja
             System.out.println("Can't move seeds from store!");
             return false;
@@ -133,19 +134,20 @@ public class GameController {
         setClickedPit(null);
     }*/
 
-    private void gameLoop() {
-        while (!isEndOfGame()) {
-            do {
-                //player1 rákattint egy pitre
-                // checkMove() végigpottyantja a seedeket -> move()
-                checkMove(currentPlayer, clickedPit);
-            } while (!checkMove(currentPlayer, clickedPit)); //TODO currentPlayer és clickedPit
-            checkCapture(currentPlayer, clickedPit);
-            //TODO: checkLandInStore() --> ha true, akkor jöhet megint
-            checkLandInStore(clickedPit);
-            passRound(); //----
-        }
+    public void gameLoop() {
+        if (!isEndOfGame()) {
 
+            //player1 rákattint egy pitre
+            // checkMove() végigpottyantja a seedeket -> move()
+            checkMove(currentPlayer, clickedPit);
+            if (checkMove(currentPlayer, clickedPit)) { //TODO currentPlayer és clickedPit
+                checkCapture(currentPlayer, clickedPit);
+                //TODO: checkLandInStore() --> ha true, akkor jöhet megint
+                checkLandInStore(clickedPit);
+                passRound(); //----
+            }
+
+        }
     }
 
     void checkCapture(Player player, Pit start) {
