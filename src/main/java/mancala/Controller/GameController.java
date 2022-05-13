@@ -23,14 +23,15 @@ public class GameController {
     ArrayList<Seed> seeds;
     ArrayList<Pit> pits;
     Board board;
-    Player[] players=new Player[2];
+    Player[] players = new Player[2];
     Player currentPlayer;
     Pit clickedPit;
+
+    int winner = 3;
     JPanel gamePanel; //kell ez?
 
     public GameController(JPanel gamePanel) {
-        for (int i=0;i<2;i++)
-        {
+        for (int i = 0; i < 2; i++) {
             players[i] = new Player();
         }
         this.gamePanel = gamePanel;
@@ -41,7 +42,7 @@ public class GameController {
         seeds = new ArrayList<>(48); //
         pits = new ArrayList<>(14);
 
-        currentPlayer=players[0];
+        currentPlayer = players[0];
         //Create pits & Stores
         for (int i = 0; i < 14; i++) {
             if (i != STORE_1 && i != STORE_2) {//FIXME Ronda
@@ -103,15 +104,15 @@ public class GameController {
         } else if (start.getSeedCount() == 0) {
             System.out.println("Can't move seeds from an empty pit!");
             return false;
-        } else if (currentPlayer == players[0] && start.getId()>6) {
+        } else if (currentPlayer == players[0] && start.getId() > 6) {
             System.out.println(start.getId());
             System.out.println(String.valueOf(currentPlayer == players[0]));
             System.out.println("Can't move other player's seeds!");
-            return  false;
-        } else if (currentPlayer == players[1] && start.getId()<=6) {
+            return false;
+        } else if (currentPlayer == players[1] && start.getId() <= 6) {
             System.out.println(String.valueOf(currentPlayer == players[0]));
             System.out.println("Can't move other player's seeds!");
-            return  false;
+            return false;
         } else {
             move(start);
         }
@@ -131,7 +132,7 @@ public class GameController {
         for (int i = 0; i < start.getSeedCount(); i++) {
 
             if ((start.getId() + i) % 14 == avoidStoreID) shift++;
-            pits.get(((start.getId()  + i + shift) % 14)).addSeed(pitSeeds.get(i));
+            pits.get(((start.getId() + i + shift) % 14)).addSeed(pitSeeds.get(i));
         }
         checkCapture(currentPlayer, clickedPit);
         checkLandInStore(clickedPit);
@@ -158,7 +159,7 @@ public class GameController {
             //player1 rákattint egy pitre
             // checkMove() végigpottyantja a seedeket -> move()
             //checkMove(currentPlayer, clickedPit);
-            if(clickedPit!=null){
+            if (clickedPit != null) {
                 if (checkMove(currentPlayer, clickedPit)) { //TODO currentPlayer és clickedPit
 
                     //TODO: checkLandInStore() --> ha true, akkor jöhet megint
@@ -170,12 +171,15 @@ public class GameController {
             }
 
             gamePanel.repaint();
+        } else {
+            message = "Vege a játéknak, gyoztes: " + winner;
+            gamePanel.repaint();
+            newGame();
         }
-
     }
 
     void checkCapture(Player player, Pit start) {
-        int checkedID = (start.getId() + start.getSeedCount())% 14 ;
+        int checkedID = (start.getId() + start.getSeedCount()) % 14;
         int relativeStore = 0;
 
         // Ha az érkezés pitje a jobb okldali store-tól ugyanakkora távolságra lévő pit üres, akkor capture()
@@ -214,7 +218,7 @@ public class GameController {
      * @return True if it will land in a store, false if not.
      */
     void checkLandInStore(Pit start) {
-        int checkedID = ((start.getId() + start.getSeedCount())-1) % 14;
+        int checkedID = ((start.getId() + start.getSeedCount()) - 1) % 14;
 
         System.out.println(checkedID);
         if (checkedID == STORE_1 || checkedID == STORE_2) { //A két store ID-ja
@@ -224,8 +228,8 @@ public class GameController {
             //TODO: bewaitelni a kattintást valahogy
             passRound();
             //move(start);
-        }else{
-            message="";
+        } else {
+            message = "";
         }
     }
 
@@ -241,27 +245,18 @@ public class GameController {
     }*/
     public boolean isEndOfGame() {
         boolean allEmpty = false;
-        Player winner = null;
 
-        for (int player1pit : PLAYER1PITS) {
-            if (pits.get(player1pit).getSeedCount() != 0) {
-                allEmpty = false;
-                winner = null;
-                break;
+
+        if (pits.get(STORE_1).getSeedCount() + pits.get(STORE_2).getSeedCount() == 48) {
+            if (pits.get(STORE_1).getSeedCount() > pits.get(STORE_2).getSeedCount()) {
+                allEmpty = true;
+                winner = 0;
+            } else {
+                allEmpty = true;
+                winner = 1;
             }
-            allEmpty = true;
-            winner = players[1];
         }
 
-        for (int player2pit : PLAYER2PITS) {
-            if (pits.get(player2pit).getSeedCount() != 0) {
-                allEmpty = false;
-                winner = null;
-                break;
-            }
-            allEmpty = true;
-            winner = players[0];
-        }
 
         return allEmpty;
     }
@@ -306,7 +301,8 @@ public class GameController {
     public String getMessage() {
         return message;
     }
-    public boolean getPlayer(){
-        return currentPlayer==players[0];
+
+    public boolean getPlayer() {
+        return currentPlayer == players[0];
     }
 }
